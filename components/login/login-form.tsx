@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { LoginInfo } from "@/models/index";
 import { Button, Form } from "react-daisyui";
 import { useForm } from "react-hook-form";
@@ -13,11 +13,11 @@ const schema = yup.object<Shape<LoginInfo>>({
   password: yup.string().min(8).max(32).required(),
 });
 
-function LoginForm() {
+const LoginForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
   } = useForm<LoginInfo>({
     resolver: yupResolver(schema),
@@ -52,6 +52,6 @@ function LoginForm() {
       </div>
     </Form>
   );
-}
+};
 
 export default LoginForm;
