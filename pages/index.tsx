@@ -1,11 +1,9 @@
-import Image from "next/image";
-import logo from "../public/logo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { LoginInfo } from "@/models/index";
-import { useCallback } from "react";
-import { Button } from "react-daisyui";
 import LoginForm from "@/components/login/login-form";
+import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import { Button } from "react-daisyui";
+import logo from "../public/logo.png";
 
 function LoginPage() {
   return (
@@ -17,6 +15,10 @@ function LoginPage() {
           <Button className="btn btn-primary">
             <FontAwesomeIcon className="mr-4" icon={faGoogle} />
             Login with Google
+          </Button>
+          <Button className="btn btn-primary">
+            <FontAwesomeIcon className="mr-4" icon={faGithub} />
+            Login with Github
           </Button>
           <div className="divider">OR</div>
           <LoginForm />
