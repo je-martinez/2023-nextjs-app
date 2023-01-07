@@ -9,7 +9,7 @@ function LoginPage() {
           <span className="absolute left-0 top-0 flex items-center justify-center h-full w-10 text-blue-500">
             <i className="fab fa-facebook-f"></i>
           </span>
-          <span>Login with Facebook</span>
+          <span>Login with Google</span>
         </button>
         <div className="relative mt-10 h-px bg-gray-300">
           <div className="absolute left-0 top-0 flex justify-center w-full -mt-2">
@@ -32,9 +32,9 @@ function LoginPage() {
                   <svg
                     className="h-6 w-6"
                     fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
@@ -64,9 +64,9 @@ function LoginPage() {
                     <svg
                       className="h-6 w-6"
                       fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                     >
@@ -106,9 +106,9 @@ function LoginPage() {
                   <svg
                     className="h-6 w-6"
                     fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
@@ -129,9 +129,9 @@ function LoginPage() {
               <svg
                 className="h-6 w-6"
                 fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
