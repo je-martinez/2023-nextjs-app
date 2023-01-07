@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import Home from "../pages";
 import "@testing-library/jest-dom";
+import LoginPage from "../pages";
 
-describe("Home", () => {
-  it("renders a heading", () => {
-    render(<Home />);
-    expect(screen.getByText("Get started by editing")).toBeInTheDocument();
+describe("Login Page", () => {
+  it("should render button to login with Google", () => {
+    render(<LoginPage />);
+    expect(screen.getByText("Login To Your Account")).toBeInTheDocument();
   });
 });
