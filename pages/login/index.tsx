@@ -2,41 +2,29 @@ import LoginForm from "@/components/login/login-form";
 import { useAppSelector } from "@/store/index";
 import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { GetStaticProps, NextPage } from "next";
-import { getProviders, signIn } from "next-auth/react";
+import { NextPage } from "next";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "react-daisyui";
 import logo from "../../public/logo.png";
-import { selectAuthState, setProviders } from "../../store/slices/auth.slice";
 import { wrapper } from "../../store/index";
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const providers = await getProviders();
-//   console.log(context);
-
-//   return { props: {} };
-// };
+import { selectAuthState } from "../../store/slices/auth.slice";
+import { getProvidersThunk } from "../../store/thunks/auth.thunk";
 
 export const getStaticProps = wrapper.getStaticProps(
   (store) =>
     async ({ preview }) => {
-      const providers = await getProviders();
-      if (providers) {
-        store.dispatch(setProviders(providers));
-      }
+      await store.dispatch(getProvidersThunk());
       return { props: {} };
     }
 );
 
 const LoginPage: NextPage = () => {
-  const router = useRouter();
   const { providers } = useAppSelector(selectAuthState);
   const login = async (providerId: string) => {
-    await signIn(providers?.google?.id);
+    await signIn(providerId);
   };
-
-  console.log("providers", providers);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4">

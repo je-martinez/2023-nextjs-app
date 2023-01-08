@@ -1,11 +1,14 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, SerializedError, createSlice } from "@reduxjs/toolkit";
 import { Session } from "next-auth";
 import { BuiltInProviderType } from "next-auth/providers";
 import { ClientSafeProvider, LiteralUnion } from "next-auth/react";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "..";
+import { getProvidersThunk } from "../thunks/auth.thunk";
 export interface AuthState {
   loadingInitialSession: boolean;
+  loadingGetProviders: boolean;
+  errorGetProviders: string | null | undefined;
   session: Session | undefined | null;
   providers: Record<
     LiteralUnion<BuiltInProviderType, string>,
@@ -15,6 +18,8 @@ export interface AuthState {
 
 const initialState: AuthState = {
   loadingInitialSession: false,
+  errorGetProviders: null,
+  loadingGetProviders: false,
   session: null,
   providers: null,
 };
@@ -52,6 +57,39 @@ export const authSlice = createSlice({
     builder.addCase(HYDRATE, (state: AuthState, action: any) => {
       return { ...state, ...action.payload.auth };
     });
+    builder.addCase(getProvidersThunk.pending, (state: AuthState) => {
+      return {
+        ...state,
+        loadingGetProviders: true,
+        errorGetProviders: null,
+      };
+    });
+    builder.addCase(
+      getProvidersThunk.fulfilled,
+      (
+        state: AuthState,
+        action: PayloadAction<
+          | Record<
+              LiteralUnion<BuiltInProviderType, string>,
+              ClientSafeProvider
+            >
+          | undefined
+        >
+      ) => {
+        console.log("Ab");
+        return { ...state, providers: action.payload! };
+      }
+    );
+    builder.addCase(
+      getProvidersThunk.rejected,
+      (state: AuthState, action: PayloadAction<RejectedThunkResult>) => {
+        return {
+          ...state,
+          loadingGetProviders: false,
+          errorGetProviders: action.payload as string,
+        };
+      }
+    );
   },
 });
 
