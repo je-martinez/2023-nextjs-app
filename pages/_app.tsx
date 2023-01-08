@@ -1,11 +1,14 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
+import { wrapper } from "store/store";
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <Component {...pageProps} />
     </SessionProvider>
   );
 }
+
+export default wrapper.withRedux(App);

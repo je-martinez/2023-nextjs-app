@@ -18,7 +18,7 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/models/*": ["models/*"],
-      "@/guards/*": ["guards/*"]
+      "@/store/*": ["store/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
