@@ -76,7 +76,6 @@ export const authSlice = createSlice({
           | undefined
         >
       ) => {
-        console.log("Ab");
         return { ...state, providers: action.payload! };
       }
     );

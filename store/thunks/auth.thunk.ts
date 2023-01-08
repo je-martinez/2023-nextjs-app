@@ -8,7 +8,7 @@ import {
 
 export const getProvidersThunk = createAsyncThunk(
   "auth/getProviders",
-  async (noParams: undefined, { rejectWithValue }): Promise<any> => {
+  async (noParams: undefined, { rejectWithValue }) => {
     try {
       const providers = await getProviders();
       return providers as Record<
