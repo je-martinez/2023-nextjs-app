@@ -10,7 +10,13 @@ const store = configureStore({
   devTools: true,
 });
 
-const makeStore = () => store;
+const makeStore = () =>
+  configureStore({
+    reducer: {
+      [authSlice.name]: authSlice.reducer,
+    },
+    devTools: true,
+  });
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<typeof store.getState>;
