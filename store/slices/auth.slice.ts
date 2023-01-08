@@ -17,11 +17,20 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setLoadingInitialSession(state: AuthState, action: PayloadAction<boolean>) {
+    setLoadingInitialSession: (
+      state: AuthState,
+      action: PayloadAction<boolean>
+    ) => {
       state.loadingInitialSession = action.payload;
     },
-    setSessionState(state: AuthState, action: PayloadAction<Session>) {
+    setSession: (
+      state: AuthState,
+      action: PayloadAction<Session | undefined>
+    ) => {
       state.session = action.payload;
+    },
+    clearSession: (state: AuthState) => {
+      state.session = null;
     },
   },
   extraReducers: {
@@ -31,7 +40,8 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setLoadingInitialSession, setSessionState } = authSlice.actions;
+export const { setLoadingInitialSession, setSession, clearSession } =
+  authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 

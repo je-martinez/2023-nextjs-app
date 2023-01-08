@@ -3,15 +3,19 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { wrapper } from "store/store";
 import { AuthProvider } from "@/providers/auth.provider";
+import { Provider } from "react-redux";
 
-function App({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
+  const { store } = wrapper.useWrappedStore(pageProps);
   return (
-    <SessionProvider session={pageProps.session}>
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
-    </SessionProvider>
+    <Provider store={store}>
+      <SessionProvider session={pageProps.session}>
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </SessionProvider>
+    </Provider>
   );
 }
 
-export default wrapper.withRedux(App);
+export default MyApp;

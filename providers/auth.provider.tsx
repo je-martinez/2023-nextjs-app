@@ -1,6 +1,6 @@
 import {
   setLoadingInitialSession,
-  setSessionState,
+  setSession,
 } from "@/store/slices/auth.slice";
 import { useAppDispatch } from "@/store/store";
 import { getSession } from "next-auth/react";
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     dispatch(setLoadingInitialSession(true));
     const currentSession = await getSession();
     if (currentSession) {
-      dispatch(setSessionState(currentSession));
+      dispatch(setSession(currentSession));
     }
     dispatch(setLoadingInitialSession(false));
     if (!currentSession?.user && !publicPaths.includes(path)) {

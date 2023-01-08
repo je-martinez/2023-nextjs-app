@@ -23,10 +23,16 @@ type LoginPageProps = {
 };
 
 export const getStaticProps: GetStaticProps<LoginPageProps> = async () => {
-  const providers = await getProviders();
-  return {
-    props: { providers },
-  };
+  try {
+    const providers = await getProviders();
+    return {
+      props: { providers },
+    };
+  } catch (ex) {
+    return {
+      props: {} as any,
+    };
+  }
 };
 
 const LoginPage: NextPage<LoginPageProps> = ({ providers }: LoginPageProps) => {

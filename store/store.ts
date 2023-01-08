@@ -1,7 +1,7 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { authSlice } from "./slices/auth.slice";
-import { useDispatch } from "react-redux";
 
 const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ const store = configureStore({
 const makeStore = () => store;
 
 export type AppStore = ReturnType<typeof makeStore>;
-export type AppState = ReturnType<AppStore["getState"]>;
+export type AppState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   AppState,
@@ -22,5 +22,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 >;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
-
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 export const wrapper = createWrapper<AppStore>(makeStore);
