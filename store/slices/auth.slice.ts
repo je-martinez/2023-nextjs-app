@@ -1,25 +1,22 @@
-import { PayloadAction, SerializedError, createSlice } from "@reduxjs/toolkit";
+import { NextAuthProviders } from "@/types/global";
+import { RejectedThunkResult } from "@/types/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Session } from "next-auth";
-import { BuiltInProviderType } from "next-auth/providers";
-import { ClientSafeProvider, LiteralUnion } from "next-auth/react";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "..";
-import { getProvidersThunk } from "../thunks/auth.thunk";
+import { getProvidersThunk } from "@/store/thunks/auth.thunk";
 export interface AuthState {
   loadingInitialSession: boolean;
   loadingGetProviders: boolean;
   errorGetProviders: string | null | undefined;
   session: Session | undefined | null;
-  providers: Record<
-    LiteralUnion<BuiltInProviderType, string>,
-    ClientSafeProvider
-  > | null;
+  providers: NextAuthProviders | null;
 }
 
 const initialState: AuthState = {
   loadingInitialSession: false,
-  errorGetProviders: null,
   loadingGetProviders: false,
+  errorGetProviders: null,
   session: null,
   providers: null,
 };
@@ -41,14 +38,6 @@ export const authSlice = createSlice({
     ) => {
       state.session = action.payload;
     },
-    setProviders: (
-      state: AuthState,
-      action: PayloadAction<
-        Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>
-      >
-    ) => {
-      state.providers = action.payload;
-    },
     clearSession: (state: AuthState) => {
       state.session = null;
     },
@@ -57,6 +46,9 @@ export const authSlice = createSlice({
     builder.addCase(HYDRATE, (state: AuthState, action: any) => {
       return { ...state, ...action.payload.auth };
     });
+    /* -------------------------------------------------------------------------- */
+    /*                              getProvidersThunk                             */
+    /* -------------------------------------------------------------------------- */
     builder.addCase(getProvidersThunk.pending, (state: AuthState) => {
       return {
         ...state,
@@ -68,15 +60,13 @@ export const authSlice = createSlice({
       getProvidersThunk.fulfilled,
       (
         state: AuthState,
-        action: PayloadAction<
-          | Record<
-              LiteralUnion<BuiltInProviderType, string>,
-              ClientSafeProvider
-            >
-          | undefined
-        >
+        action: PayloadAction<NextAuthProviders | undefined>
       ) => {
-        return { ...state, providers: action.payload! };
+        return {
+          ...state,
+          loadingGetProviders: false,
+          providers: action.payload!,
+        };
       }
     );
     builder.addCase(
@@ -92,12 +82,8 @@ export const authSlice = createSlice({
   },
 });
 
-export const {
-  setLoadingInitialSession,
-  setSession,
-  setProviders,
-  clearSession,
-} = authSlice.actions;
+export const { setLoadingInitialSession, setSession, clearSession } =
+  authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 

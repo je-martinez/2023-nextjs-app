@@ -1,22 +1,15 @@
+import { NextAuthProviders } from "@/types/global";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BuiltInProviderType } from "next-auth/providers";
-import {
-  ClientSafeProvider,
-  LiteralUnion,
-  getProviders,
-} from "next-auth/react";
+import { getProviders } from "next-auth/react";
 
 export const getProvidersThunk = createAsyncThunk(
   "auth/getProviders",
-  async (noParams: undefined, { rejectWithValue }) => {
+  async (none: undefined, { rejectWithValue }) => {
     try {
       const providers = await getProviders();
-      return providers as Record<
-        LiteralUnion<BuiltInProviderType, string>,
-        ClientSafeProvider
-      >;
+      return providers as NextAuthProviders;
     } catch (ex) {
-      rejectWithValue("Error getting auth providers");
+      return rejectWithValue("Error getting auth providers");
     }
   }
 );

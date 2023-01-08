@@ -1,3 +1,5 @@
+import { SerializedError } from "@reduxjs/toolkit";
+
 type RejectedThunkResult =
   | unknown
   | string

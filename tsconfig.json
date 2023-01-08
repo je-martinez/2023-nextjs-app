@@ -20,7 +20,8 @@
       "@/models/*": ["models/*"],
       "@/store/*": ["store/*"],
       "@/layouts/*": ["layouts/*"],
-      "@/providers/*": ["providers/*"]
+      "@/providers/*": ["providers/*"],
+      "@/types/*": ["types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
