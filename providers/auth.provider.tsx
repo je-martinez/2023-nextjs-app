@@ -2,10 +2,10 @@ import {
   setLoadingInitialSession,
   setSession,
 } from "@/store/slices/auth.slice";
-import { useAppDispatch } from "@/store/store";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../store";
 
 interface AuthProviderProps {
   children: any;

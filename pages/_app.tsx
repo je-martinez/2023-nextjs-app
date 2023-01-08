@@ -1,7 +1,7 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-import { wrapper } from "store/store";
+import { wrapper } from "@/store/index";
 import { AuthProvider } from "@/providers/auth.provider";
 import { Provider } from "react-redux";
 
