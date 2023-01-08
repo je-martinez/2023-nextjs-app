@@ -30,11 +30,9 @@ export const getStaticProps: GetStaticProps<LoginPageProps> = async () => {
 };
 
 const LoginPage: NextPage<LoginPageProps> = ({ providers }: LoginPageProps) => {
-  const { data: session, status } = useSession();
   const router = useRouter();
-  console.log({ session });
   const login = async (providerId: string) => {
-    await signIn(providers?.google?.id, { redirect: true });
+    await signIn(providers?.google?.id);
   };
 
   return (
@@ -44,7 +42,7 @@ const LoginPage: NextPage<LoginPageProps> = ({ providers }: LoginPageProps) => {
           <Image src={logo} alt="Logo" />
           <i className="fa-brands fa-google"></i>
           <Button
-            className="btn btn-primary"
+            className="btn bg-blue-500"
             onClick={() => {
               login(providers?.google?.id!);
             }}
@@ -53,7 +51,7 @@ const LoginPage: NextPage<LoginPageProps> = ({ providers }: LoginPageProps) => {
             Login with Google
           </Button>
           <Button
-            className="btn btn-primary"
+            className="btn bg-gray-700"
             onClick={() => {
               login(providers?.github?.id!);
             }}

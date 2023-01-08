@@ -7,9 +7,6 @@ const HomePage: NextPage = () => {
   const router = useRouter();
   const logout = async () => {
     await signOut();
-    router.push({
-      pathname: "/login",
-    });
   };
 
   return (
