@@ -14,7 +14,20 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
+  const [pathToNavigate, setPathToNavigate] = useState<
+    string | null | undefined
+  >(null);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (pathToNavigate && pathToNavigate !== router.asPath) {
+      router.push(pathToNavigate);
+      return () => {
+        setPathToNavigate(null);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathToNavigate, router.asPath]);
 
   useEffect(() => {
     authCheck(router.asPath);
@@ -42,14 +55,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     dispatch(setLoadingInitialSession(false));
     if (!currentSession?.user && !publicPaths.includes(path)) {
       setAuthorized(false);
-      router.push({
-        pathname: "/login",
-      });
+      setPathToNavigate("/login");
     } else {
       if (url === "/login" && currentSession) {
-        router.push({
-          pathname: "/",
-        });
+        setPathToNavigate("/");
       }
       setAuthorized(true);
     }
