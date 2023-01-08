@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import { Button } from "react-daisyui";
 import logo from "../../public/logo.png";
+import { useRouter } from "next/router";
 
 type LoginPageProps = {
   providers: Record<
@@ -30,8 +31,11 @@ export const getStaticProps: GetStaticProps<LoginPageProps> = async () => {
 
 const LoginPage: NextPage<LoginPageProps> = ({ providers }: LoginPageProps) => {
   const { data: session, status } = useSession();
-
+  const router = useRouter();
   console.log({ session });
+  const login = async (providerId: string) => {
+    await signIn(providers?.google?.id, { redirect: true });
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4">
@@ -42,7 +46,7 @@ const LoginPage: NextPage<LoginPageProps> = ({ providers }: LoginPageProps) => {
           <Button
             className="btn btn-primary"
             onClick={() => {
-              signIn(providers?.google?.id);
+              login(providers?.google?.id!);
             }}
           >
             <FontAwesomeIcon className="mr-4" icon={faGoogle} />
@@ -51,7 +55,7 @@ const LoginPage: NextPage<LoginPageProps> = ({ providers }: LoginPageProps) => {
           <Button
             className="btn btn-primary"
             onClick={() => {
-              signIn(providers?.github?.id);
+              login(providers?.github?.id!);
             }}
           >
             <FontAwesomeIcon className="mr-4" icon={faGithub} />

@@ -1,15 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "../store";
-
-// Type for our state
+import { Session } from "next-auth";
 export interface AuthState {
-  authState: boolean;
+  loadingInitialSession: boolean;
+  session: Session | undefined | null;
 }
 
-// Initial state
 const initialState: AuthState = {
-  authState: false,
+  loadingInitialSession: false,
+  session: null,
 };
 
 // Actual Slice
@@ -17,19 +17,21 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // Action to set the authentication status
-    setAuthState(state: AuthState, action: PayloadAction<boolean>) {
-      state.authState = action.payload;
+    setLoadingInitialSession(state: AuthState, action: PayloadAction<boolean>) {
+      state.loadingInitialSession = action.payload;
+    },
+    setSessionState(state: AuthState, action: PayloadAction<Session>) {
+      state.session = action.payload;
     },
   },
   extraReducers: {
     [HYDRATE]: (state: AuthState, action: PayloadAction<any>) => {
-      state = { ...action.payload.auth };
+      state = action.payload.auth;
     },
   },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { setLoadingInitialSession, setSessionState } = authSlice.actions;
 
 export const selectAuthState = (state: AppState) => state.auth;
 
